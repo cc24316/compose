@@ -1,0 +1,43 @@
+
+version: '5.5'
+services: 
+    app:
+      build: .
+      container_name: app 
+      ports: 
+        - 80:3000
+      
+      environment:
+        - NODE_ENV=development
+      depends_on:
+        - db 
+      volumes:
+        - /Users/u24316/Documents/compose
+        - .:/Users/u24316 /Documents/compose/node_modules
+        
+    db:
+      image: mysql 
+      container_name: db 
+      restart: always  
+      environment:
+        MYSQL_ROOT_PASSWORD: cotuca
+        MYSQL_DATABASE: loja 
+        MSQL_USER: cotuca 
+        MYSQL_PASSWORD: cotuca
+      ports: 
+        - '3306:3306'
+      volumes:
+        - /Users/u24316/Documents/compose/db:/var/lib/mysql
+
+
+    node_red:
+      image: nodered/node-red:${node}-red_version
+      environment:
+        TZ: ${node}-red_timezone
+      volumes:
+        - node_red-data:/data
+      ports:
+        - 1880:1880
+
+volumes:
+  node_red-data:
